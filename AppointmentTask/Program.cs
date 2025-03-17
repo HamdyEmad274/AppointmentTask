@@ -28,6 +28,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddSingleton<IEmailSender, FakeEmailSender>();
 
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
