@@ -20,6 +20,12 @@ namespace AppointmentTask.Repositories
             return await _context.Appointments.Include(a => a.Patient).Include(a => a.Doctor).ToListAsync();
         }
 
+        public async Task<Appointment?> GetAppointmentByTimeAsync(DateTime timeSlot)
+        {
+            return await _context.Appointments.FirstOrDefaultAsync(a => a.AppointmentTime == timeSlot);
+        }
+
+
         public async Task<Appointment?> GetAppointmentByIdAsync(int id)
         {
             return await _context.Appointments.FindAsync(id);
@@ -27,9 +33,18 @@ namespace AppointmentTask.Repositories
 
         public async Task<bool> CreateAppointmentAsync(Appointment appointment)
         {
-            _context.Appointments.Add(appointment);
-            return await _context.SaveChangesAsync() > 0;
+            try
+            {
+                _context.Appointments.Add(appointment);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Database Error: {ex.Message}");  // ✅ Debugging log
+                return false;
+            }
         }
+
 
         public async Task<bool> UpdateAppointmentAsync(Appointment appointment)
         {

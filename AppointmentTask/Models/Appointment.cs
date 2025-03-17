@@ -26,6 +26,8 @@ namespace AppointmentTask.Models
         public DateTime AppointmentTime { get; set; }
 
         public AppointmentStatus Status { get; set; } = AppointmentStatus.Pending;
+        [EmailAddress]
+        public string? GuestEmail { get; set; }  // Guest Email
     }
 
     public enum AppointmentStatus

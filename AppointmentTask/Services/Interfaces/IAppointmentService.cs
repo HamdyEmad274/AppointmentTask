@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AppointmentTask.DTOs;
 using AppointmentTask.Models;
 
 namespace AppointmentTask.Services
@@ -8,7 +9,7 @@ namespace AppointmentTask.Services
     {
         Task<IEnumerable<Appointment>> GetAllAppointmentsAsync();
         Task<Appointment?> GetAppointmentByIdAsync(int id);
-        Task<bool> CreateAppointmentAsync(Appointment appointment);
+        Task<bool> CreateAppointmentAsync(AppointmentDTO appointment);
         Task<bool> UpdateAppointmentAsync(Appointment appointment);
         Task<bool> DeleteAppointmentAsync(int id);
     }
