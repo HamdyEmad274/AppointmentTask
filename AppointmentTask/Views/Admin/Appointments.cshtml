@@ -1,0 +1,31 @@
+﻿@model List<AppointmentTask.Models.Appointment>
+
+<h2>Appointments</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Model)
+        {
+            <tr>
+                <td>@appointment.Patient?.Email</td>
+                <td>@appointment.Doctor?.Email</td>
+                <td>@appointment.AppointmentTime.ToString("yyyy-MM-dd HH:mm")</td>
+                <td>@appointment.Status</td>
+                <td>
+                    <form asp-action="DeleteAppointment" asp-route-id="@appointment.Id" method="post">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
