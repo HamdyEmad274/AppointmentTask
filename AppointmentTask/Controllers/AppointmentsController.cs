@@ -115,5 +115,27 @@ namespace AppointmentTask.Controllers
             bool success = await _appointmentService.DeleteAppointmentAsync(id);
             return RedirectToAction(nameof(Index));
         }
+
+        [Authorize(Roles = "Patient")]
+        public async Task<IActionResult> MyAppointments()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var appointments = await _appointmentService.GetAppointmentsByPatientIdAsync(userId);
+
+            return View(appointments);
+        }
+
+        [Authorize(Roles = "Patient")]
+        public async Task<IActionResult> CancelAppointment(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            bool success = await _appointmentService.CancelAppointmentAsync(id, userId);
+
+            return success ? RedirectToAction(nameof(MyAppointments)) : NotFound();
+        }
+
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿@page
 @model RegisterModel
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 @{
     ViewData["Title"] = "Register";
 }
@@ -34,6 +35,23 @@
                 </select>
                 <label asp-for="Input.Role">Select Role</label>
             </div>
+
+            <div class="form-group">
+                <div class="g-recaptcha" data-sitekey="@Configuration["GoogleReCaptcha:SiteKey"]" data-callback="setRecaptchaToken"></div>
+            </div>
+
+            <input type="hidden" asp-for="RecaptchaToken" id="recaptchaToken" />
+
+            <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+            <script>
+                function setRecaptchaToken(token) {
+                    document.getElementById("recaptchaToken").value = token;
+                }
+            </script>
+
+
+
+
 
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>

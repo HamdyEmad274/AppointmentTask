@@ -8,6 +8,8 @@ namespace AppointmentTask.Repositories
     {
         Task<IEnumerable<Appointment>> GetAllAppointmentsAsync();
         Task<Appointment?> GetAppointmentByIdAsync(int id);
+        Task<List<Appointment>> GetAppointmentsByPatientIdAsync(string patientId);
+
         Task<Appointment?> GetAppointmentByTimeAsync(DateTime timeSlot);
         Task<bool> CreateAppointmentAsync(Appointment appointment);
         Task<bool> UpdateAppointmentAsync(Appointment appointment);

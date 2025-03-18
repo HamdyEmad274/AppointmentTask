@@ -77,5 +77,32 @@ namespace AppointmentTask.Services
         {
             return await _appointmentRepository.DeleteAppointmentAsync(id);
         }
+
+        public async Task<List<AppointmentDTO>> GetAppointmentsByPatientIdAsync(string patientId)
+        {
+            var appointments = await _appointmentRepository.GetAppointmentsByPatientIdAsync(patientId);
+
+            return appointments.Select(a => new AppointmentDTO
+            {
+                Id = a.Id,
+                DoctorId = a.DoctorId,
+                AppointmentTime = a.AppointmentTime,
+                Status = a.Status.ToString()
+            }).ToList();
+        }
+
+        public async Task<bool> CancelAppointmentAsync(int appointmentId, string patientId)
+        {
+            var appointment = await _appointmentRepository.GetAppointmentByIdAsync(appointmentId);
+
+            if (appointment == null || appointment.PatientId != patientId)
+            {
+                return false; // ❌ Not found or not owned by patient
+            }
+
+            appointment.Status = AppointmentStatus.Cancelled;
+            return await _appointmentRepository.UpdateAppointmentAsync(appointment);
+        }
+
     }
 }

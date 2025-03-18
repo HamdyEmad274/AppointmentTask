@@ -31,6 +31,14 @@ namespace AppointmentTask.Repositories
             return await _context.Appointments.FindAsync(id);
         }
 
+        public async Task<List<Appointment>> GetAppointmentsByPatientIdAsync(string patientId)
+        {
+            return await _context.Appointments
+                .Where(a => a.PatientId == patientId)
+                .ToListAsync();
+        }
+
+
         public async Task<bool> CreateAppointmentAsync(Appointment appointment)
         {
             try

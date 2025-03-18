@@ -1,0 +1,32 @@
+﻿@model List<AppointmentTask.DTOs.AppointmentDTO>
+
+<h2>My Appointments</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Doctor</th>
+            <th>Appointment Time</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var appointment in Model)
+        {
+            <tr>
+                <td>@appointment.DoctorId</td>
+                <td>@appointment.AppointmentTime.ToString("f")</td>
+                <td>@appointment.Status</td>
+                <td>
+                    @if (appointment.Status == "Pending")
+                    {
+                        <a asp-action="CancelAppointment" asp-route-id="@appointment.Id" class="btn btn-danger btn-sm">
+                            Cancel
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
